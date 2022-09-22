@@ -22,7 +22,6 @@ enum planck_layers {
   _BEPO,
   _QWERTY,
   _COLEMAK,
-  _DVORAK,
   _LOWER,
   _RAISE,
   _PLOVER,
@@ -33,7 +32,6 @@ enum planck_keycodes {
   BEPO = SAFE_RANGE,
   QWERTY,
   COLEMAK,
-  DVORAK,
   PLOVER,
   BACKLIT,
   EXT_PLV
@@ -56,100 +54,82 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_BEPO] = LAYOUT_planck_grid(
-    ESC_CURR ,  KC_B,    KC_2,    KC_P,    KC_O,    KC_7,    KC_SLSH,    KC_V,    KC_D,    KC_L,    KC_J,    KC_W,
-    KC_Z,  KC_Q,    KC_U,    KC_I,    KC_E,    KC_M,    KC_C,    KC_T,    KC_S,    KC_R,    KC_N, KC_SCLN,
-    KC_QUOT, KC_0,    KC_Y,    KC_X,    DOT,    KC_K,    QUEST,    KC_A,    KC_G, KC_H,  KC_F, KC_9 ,
-    KC_LEFT, KC_UP, KC_LCTL, LALT_RALT, KC_SPC,   OPAR_LOWER,  CPAR_RAISE,  KC_LSFT,   KC_ENT, TAB_GUI, KC_DOWN,   KC_RGHT
+    ESC_CURR,  KC_B,    KC_2,     KC_P,       KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,     KC_J,      KC_W,
+    KC_Z,      KC_Q,    KC_U,     KC_I,       KC_E,    KC_M,          KC_C,          KC_T,      KC_S,    KC_R,     KC_N,      KC_SCLN,
+    KC_QUOT,   KC_0,    KC_Y,     KC_X,       DOT,     KC_K,          QUEST,         KC_A,      KC_G,    KC_H,     KC_F,      KC_9 ,
+    KC_LEFT,   KC_UP,   KC_LCTL,  LALT_RALT,  KC_SPC,  LPAREN_LOWER,  RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TAB_GUI,  KC_DOWN,   KC_RGHT
 ),
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |   Q  |   W  |   E  |   R  |   T  |      |      |   Y  |   U  |   I  |   O  |   P  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |   A  |   S  |   D  |   F  |   G  |      |      |   H  |   J  |   K  |   L  |   ;  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |   Z  |   X  |   C  |   V  |   B  |      |      |   N  |   M  |   ,  |   .  |   /  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     _______,  _______,  KC_Y,      KC_U,     KC_I,     KC_O,     KC_P,
+    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,     _______,  _______,  KC_H,      KC_J,     KC_K,     KC_L,     KC_SCLN,
+    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     _______,  _______,  KC_N,      KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,
+    _______, _______, _______, _______, _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______
 ),
 
 /* Colemak
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
+ * |   Q  |   W  |   F  |   P  |   G  |      |      |   J  |   L  |   U  |   Y  |   ;  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  '   |
+ * |   A  |   R  |   S  |   T  |   D  |      |      |   H  |   N  |   E  |   I  |   O  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
+ * |   Z  |   X  |   C  |   V  |   B  |      |      |   K  |   M  |   ,  |   .  |   /  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
-),
-
-/* Dvorak
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   '  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_DVORAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
-    KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_TAB,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_G,     _______,  _______,    KC_J,    KC_L,     KC_U,     KC_Y,     KC_SCLN,
+    KC_ESC,   KC_A,     KC_R,     KC_S,     KC_T,     KC_D,     _______,  _______,    KC_H,    KC_N,     KC_E,     KC_I,     KC_O,  
+    KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     _______,  _______,    KC_K,    KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
+ * | ESC  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+ * | F12  | Save | Undo | Redo |Replce| BSPC | DEL  | NONE | NONE |Prev  | Play |Next  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | | Home | End  |      |
+ * |Captr |Close | Cut  | Copy |Paste |Refrsh|Insert| Open |BK_LED| Vol- | Mute |Vol+  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * | Home | PgUp |      |      |      |             |      |      |      | PgDn | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  _______,
-    _______, _______, _______, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
+    KC_ESC,           KC_F1,       KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,      KC_F7,    KC_F8,    KC_F9,                KC_F10,               KC_F11,
+    KC_F12,           SAVE,        UNDO,     REDO,     REPLACE,  KC_BSPC,         KC_DEL,     XXXXXXX,  XXXXXXX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_PLAY_PAUSE,  KC_MEDIA_NEXT_TRACK,
+    KC_PRINT_SCREEN,  CLOSE,       CUT,      COPY,     PASTE,    KC_WWW_REFRESH,  KC_INSERT,  OPEN,     BACKLIT,  KC_VOLD,              KC_KB_MUTE,           KC_VOLU,
+    KC_HOME,          KC_PAGE_UP,  _______,  _______,  _______,  _______,         _______,    _______,  _______,  _______,              KC_PAGE_DOWN,         KC_END
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ *|QK_GESC|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   °  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+ * |  &   |   "  |   <  |   >  |   {  |   }  |   @  |   +  |   -  |   /  |   *  |   =  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |Pg Up |Pg Dn |      |
+ * | NONE |   #  |   [  |   ]  |   |  |   ^  |   _  |   ~  |   \  |   !  |   .  |   ,  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-    QK_GESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    QK_GESC,  UN,       DEUX,     TROIS,    QUATRE,   CINQ,     SIX,         SEPT,     HUIT,          NEUF,     ZERO,      DEGREES,
+    KC_1,     KC_3,     MIN,      MAX,      LCURLB,   RCURLB,   AROBASE,     PLUS,     MINUS,         DIVIDE,   MULTIPLY,  EQUAL,
+    XXXXXXX,  HASHTAG,  LSQUARB,  RSQUARB,  PIPE,     CHAPEAU,  UNDERSCORE,  TILD,     FORWARD_SLSH,  KC_SLSH,  KC_PDOT,   KC_M,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,     _______,  _______,       _______,  _______,   _______
 ),
 
 /* Plover layer (http://opensteno.org)
@@ -202,9 +182,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case BEPO:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_BEPO);
+      }
+      return false;
+      break;
     case QWERTY:
       if (record->event.pressed) {
-        print("mode just switched to qwerty and this is a huge string\n");
+        // print("mode just switched to qwerty and this is a huge string\n");
         set_single_persistent_default_layer(_QWERTY);
       }
       return false;
@@ -212,12 +198,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case DVORAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_DVORAK);
       }
       return false;
       break;
