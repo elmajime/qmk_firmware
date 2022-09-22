@@ -37,56 +37,96 @@ enum planck_keycodes {
   EXT_PLV
 };
 
-enum MY_KEYCODES {
-ESC_CURR,
-DOT,
-TAB_GUI,
-QUEST,
-RPAREN_RAISE,
-LALT_RALT,
-LPAREN_LOWER,
-SAVE,
-UNDO,
-REDO,
-REPLACE,
-CLOSE,
-CUT,
-COPY,
-PASTE,
-OPEN,
-UN,
-DEUX,
-TROIS,
-QUATRE,
-CINQ,
-SIX,
-SEPT,
-HUIT,
-NEUF,
-ZERO,
-DEGREES,
-MIN,
-MAX,
-LCURLB,
-RCURLB,
-AROBASE,
-PLUS,
-MINUS,
-DIVIDE,
-MULTIPLY,
-EQUAL,
-HASHTAG,
-LSQUARB,
-RSQUARB,
-PIPE,
-CHAPEAU,
-UNDERSCORE,
-TILD,
-FORWARD_SLSH
+#define DOT LSFT(KC_COMM)
+#define QUEST LSFT(KC_M)
+#define SAVE LCTL(KC_S)
+#define UNDO LCTL(KC_Z)
+#define REDO LCTL(KC_Y)
+#define REPLACE LCTL(KC_R)
+#define CLOSE LCTL(KC_W)
+#define CUT LCTL(KC_X)
+#define COPY LCTL(KC_C)
+#define PASTE LCTL(KC_P)
+#define OPEN LCTL(KC_O)
+#define UN LSFT(KC_1)
+#define DEUX LSFT(KC_2)
+#define TROIS LSFT(KC_3)
+#define QUATRE LSFT(KC_4)
+#define CINQ LSFT(KC_5)
+#define SIX LSFT(KC_6)
+#define SEPT LSFT(KC_7)
+#define HUIT LSFT(KC_8)
+#define NEUF LSFT(KC_9)
+#define ZERO LSFT(KC_0)
+#define DEGREES LSFT(KC_MINS)
+#define LANGLEB KC_NUBS
+#define RANGLEB LSFT(KC_NUBS)
+#define LCURLB RALT(KC_4)
+#define RCURLB RALT(KC_EQL)
+#define AROBASE RALT(KC_0)
+#define PLUS KC_PPLS
+#define MINUS KC_PMNS
+#define DIVIDE KC_PSLS
+#define MULTIPLY KC_PAST
+#define EQUAL KC_EQL
+#define HASHTAG RALT(KC_3)
+#define LSQUARB RALT(KC_5)
+#define RSQUARB RALT(KC_MINS)
+#define PIPE RALT(KC_6)
+#define UNDERSCORE KC_8
+#define TILD RALT(KC_2)
+#define FORWARD_SLSH RALT(KC_8)
+
+// Tap Dance keycodes
+enum td_keycodes {
+  TD_ESC_CURRENCIES,
+  TD_TAB_GUI,
+  TD_LALT_RALT,
+  TD_LPAREN_LOWER,
+  TD_RPAREN_RAISE,
+  TD_CHAPEAU
 };
 
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
+    TD_DOUBLE_SINGLE_TAP, // Send two single taps
+    TD_TRIPLE_TAP,
+    TD_TRIPLE_HOLD,
+    TD_TRIPLE_SINGLE_TAP, // Send triple single taps
+
+} td_state_t;
+
+// Create a global instance of the tapdance state type
+static td_state_t td_state;
+
+// Declare your tapdance functions:
+
+// Function to determine the current tapdance state
+td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+// `finished` and `reset` functions for each tapdance keycode
+void TD_ESC_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_ESC_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void TD_TAB_GUI_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void TD_LPAREN_LOWER_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_LPAREN_LOWER_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void TD_RPAREN_RAISE_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_RPAREN_RAISE_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void TD_CHAPEAU_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_CHAPEAU_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -102,10 +142,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_BEPO] = LAYOUT_planck_grid(
-    ESC_CURR,  KC_B,    KC_2,     KC_P,       KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,     KC_J,      KC_W,
+    TD_ESC_CURRENCIES,  KC_B,    KC_2,     KC_P,       KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,     KC_J,      KC_W,
     KC_Z,      KC_Q,    KC_U,     KC_I,       KC_E,    KC_M,          KC_C,          KC_T,      KC_S,    KC_R,     KC_N,      KC_SCLN,
     KC_QUOT,   KC_0,    KC_Y,     KC_X,       DOT,     KC_K,          QUEST,         KC_A,      KC_G,    KC_H,     KC_F,      KC_9 ,
-    KC_LEFT,   KC_UP,   KC_LCTL,  LALT_RALT,  KC_SPC,  LPAREN_LOWER,  RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TAB_GUI,  KC_DOWN,   KC_RGHT
+    KC_LEFT,   KC_UP,   KC_LCTL,  TD_LALT_RALT,  KC_SPC,  TD_LPAREN_LOWER,  TD_RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TD_TAB_GUI,  KC_DOWN,   KC_RGHT
 ),
 
 /* Qwerty
@@ -146,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * | ESC  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
+ * |ESC_$€|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | F12  | Save | Undo | Redo |Replce| BSPC | DEL  | NONE | NONE |Prev  | Play |Next  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -156,10 +196,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    KC_ESC,           KC_F1,       KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,      KC_F7,    KC_F8,    KC_F9,                KC_F10,               KC_F11,
-    KC_F12,           SAVE,        UNDO,     REDO,     REPLACE,  KC_BSPC,         KC_DEL,     XXXXXXX,  XXXXXXX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_PLAY_PAUSE,  KC_MEDIA_NEXT_TRACK,
-    KC_PRINT_SCREEN,  CLOSE,       CUT,      COPY,     PASTE,    KC_WWW_REFRESH,  KC_INSERT,  OPEN,     BACKLIT,  KC_VOLD,              KC_KB_MUTE,           KC_VOLU,
-    KC_HOME,          KC_PAGE_UP,  _______,  _______,  _______,  _______,         _______,    _______,  _______,  _______,              KC_PAGE_DOWN,         KC_END
+    TD_ESC_CURRENCIES,  KC_F1,       KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,      KC_F7,    KC_F8,    KC_F9,                KC_F10,               KC_F11,
+    KC_F12,             SAVE,        UNDO,     REDO,     REPLACE,  KC_BSPC,         KC_DEL,     XXXXXXX,  XXXXXXX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_PLAY_PAUSE,  KC_MEDIA_NEXT_TRACK,
+    KC_PRINT_SCREEN,    CLOSE,       CUT,      COPY,     PASTE,    KC_WWW_REFRESH,  KC_INSERT,  OPEN,     BACKLIT,  KC_VOLD,              KC_KB_MUTE,           KC_VOLU,
+    KC_HOME,            KC_PAGE_UP,  _______,  _______,  _______,  _______,         _______,    _______,  _______,  _______,              KC_PAGE_DOWN,         KC_END
 ),
 
 /* Raise
@@ -175,8 +215,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_planck_grid(
     QK_GESC,  UN,       DEUX,     TROIS,    QUATRE,   CINQ,     SIX,         SEPT,     HUIT,          NEUF,     ZERO,      DEGREES,
-    KC_1,     KC_3,     MIN,      MAX,      LCURLB,   RCURLB,   AROBASE,     PLUS,     MINUS,         DIVIDE,   MULTIPLY,  EQUAL,
-    XXXXXXX,  HASHTAG,  LSQUARB,  RSQUARB,  PIPE,     CHAPEAU,  UNDERSCORE,  TILD,     FORWARD_SLSH,  KC_SLSH,  KC_PDOT,   KC_M,
+    KC_1,     KC_3,     LANGLEB,      RANGLEB,      LCURLB,   RCURLB,   AROBASE,     PLUS,     MINUS,         DIVIDE,   MULTIPLY,  EQUAL,
+    XXXXXXX,  HASHTAG,  LSQUARB,  RSQUARB,  PIPE,     TD_CHAPEAU,  UNDERSCORE,  TILD,     FORWARD_SLSH,  KC_SLSH,  KC_PDOT,   KC_M,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,     _______,  _______,       _______,  _______,   _______
 ),
 
@@ -294,321 +334,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-
-    case ESC_CURR:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case DOT:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case TAB_GUI:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case QUEST:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case RPAREN_RAISE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case LALT_RALT:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case LPAREN_LOWER:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case SAVE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case UNDO:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case REDO:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case REPLACE
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case CLOSE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case CUT:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case COPY:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case PASTE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case OPEN:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case UN:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case DEUX:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case TROIS:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case QUATRE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case CINQ:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case SIX:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case SEPT:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case HUIT:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case NEUF:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case ZERO:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case DEGREES:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case MIN:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case MAX:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case LCURLB:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case RCURLB:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case AROBASE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case PLUS:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case MINUS:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case DIVIDE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case MULTIPLY:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case EQUAL:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case HASHTAG:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case LSQUARB:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case RSQUARB:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case PIPE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case CHAPEAU:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case UNDERSCORE:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }:
-      return false;
-      break;
-    case TILD:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
-      break;
-    case FORWARD_SLSH:
-      if (record->event.pressed) {
-        register_code();
-        unregister_code();
-      }
-      return false;
+    default:
       break;
   }
   return true;
@@ -681,6 +407,8 @@ bool dip_switch_update_user(uint8_t index, bool active) {
             } else {
                 muse_mode = false;
             }
+        default:
+          break;
     }
     return true;
 }
@@ -708,10 +436,264 @@ void matrix_scan_user(void) {
 
 bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
-    case RAISE:
-    case LOWER:
+    case MO(_RAISE):
+    case MO(_LOWER):
       return false;
     default:
       return true;
   }
 }
+
+// Determine the tapdance state to return
+td_state_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+        // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
+        else return TD_SINGLE_HOLD;
+    } else if (state->count == 2) {
+        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
+        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
+        // keystrokes of the key, and not the 'double tap' action/macro.
+        if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+        else if (state->pressed) return TD_DOUBLE_HOLD;
+        else return TD_DOUBLE_TAP;
+    } else if (state->count == 3) {
+        // Handling cases like www
+        if (state->interrupted) return TD_TRIPLE_SINGLE_TAP;
+        else if (!state->pressed) return TD_TRIPLE_TAP;
+        else return TD_TRIPLE_HOLD;
+    } else return TD_UNKNOWN;
+}
+
+// Handle the possible states for each tapdance keycode you define:
+
+void TD_ESC_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            register_code16(KC_ESC);
+            break;
+        case TD_DOUBLE_SINGLE_TAP: // Allow nesting of 2 escape within tapping term
+            tap_code16(KC_ESC);
+            register_code16(KC_ESC);
+            break;
+        case TD_TRIPLE_SINGLE_TAP: // Allow nesting of 3 escape within tapping term
+            tap_code16(KC_ESC);
+            tap_code16(KC_ESC);
+            register_code16(KC_ESC);
+            break;
+        case TD_DOUBLE_HOLD:
+            register_code16(KC_RBRC);
+            break;
+        case TD_TRIPLE_HOLD:
+            register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            register_code16(KC_E);
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_ESC_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(KC_ESC);
+            break;
+        case TD_DOUBLE_SINGLE_TAP: // Allow nesting of 2 escape within tapping term
+            unregister_code16(KC_ESC);
+            break;
+        case TD_TRIPLE_SINGLE_TAP: // Allow nesting of 3 escape within tapping term
+            unregister_code16(KC_ESC);
+            break;
+        case TD_DOUBLE_HOLD:
+            unregister_code16(KC_RBRC);
+            break;
+        case TD_TRIPLE_HOLD:
+            unregister_code16(KC_E);
+            unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_TAB_GUI_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            register_code16(KC_TAB);
+            break;
+        case TD_DOUBLE_SINGLE_TAP:
+            tap_code16(KC_TAB);
+            register_code16(KC_TAB);
+            break;
+        case TD_TRIPLE_SINGLE_TAP:
+            tap_code16(KC_TAB);
+            tap_code16(KC_TAB);
+            register_code16(KC_TAB);
+            break;
+        case TD_SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_RGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(KC_TAB);
+            break;
+        case TD_DOUBLE_SINGLE_TAP:
+            unregister_code16(KC_TAB);
+            break;
+        case TD_TRIPLE_SINGLE_TAP:
+            unregister_code16(KC_TAB);
+            break;
+        case TD_TRIPLE_HOLD:
+            unregister_mods(MOD_BIT(KC_RGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_DOUBLE_HOLD:
+            register_mods(MOD_BIT(KC_LALT));
+            break;
+        case TD_TRIPLE_HOLD:
+            register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_DOUBLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LALT));
+            break;
+        case TD_TRIPLE_HOLD:
+            unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_LPAREN_LOWER_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            register_code16(KC_5);
+            break;
+        case TD_DOUBLE_TAP:
+            tap_code16(KC_5);
+            register_code16(KC_5);
+            break;
+        case TD_TRIPLE_TAP:
+            tap_code16(KC_5);
+            tap_code16(KC_5);
+            register_code16(KC_5);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(_LOWER);
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_LPAREN_LOWER_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(KC_5);
+            break;
+        case TD_DOUBLE_TAP:
+            unregister_code16(KC_5);
+            break;
+        case TD_TRIPLE_TAP:
+            unregister_code16(KC_5);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_off(_LOWER);
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_RPAREN_RAISE_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            register_code16(KC_MINS);
+            break;
+        case TD_DOUBLE_TAP:
+            tap_code16(KC_MINS);
+            register_code16(KC_MINS);
+            break;
+        case TD_TRIPLE_TAP:
+            tap_code16(KC_MINS);
+            tap_code16(KC_MINS);
+            register_code16(KC_MINS);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(_RAISE);
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_RPAREN_RAISE_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            unregister_code16(KC_MINS);
+            break;
+        case TD_DOUBLE_TAP:
+            unregister_code16(KC_MINS);
+            break;
+        case TD_TRIPLE_TAP:
+            unregister_code16(KC_MINS);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_off(_RAISE);
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_CHAPEAU_finished(qk_tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            SEND_STRING("^");
+            break;
+        case TD_DOUBLE_TAP:
+            SEND_STRING("^^");
+            break;
+        default:
+            break;
+    }
+}
+
+void TD_CHAPEAU_reset(qk_tap_dance_state_t *state, void *user_data) {
+
+}
+
+// Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_ESC_CURRENCIES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_ESC_CURRENCIES_finished,TD_ESC_CURRENCIES_reset),
+    [TD_TAB_GUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_TAB_GUI_finished,TD_TAB_GUI_reset),
+    [TD_LALT_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LALT_RALT_finished,TD_LALT_RALT_reset),
+    [TD_LPAREN_LOWER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LPAREN_LOWER_finished,TD_LPAREN_LOWER_reset),
+    [TD_RPAREN_RAISE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_RPAREN_RAISE_finished,TD_RPAREN_RAISE_reset),
+    [TD_CHAPEAU] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_CHAPEAU_finished,TD_CHAPEAU_reset)
+};
