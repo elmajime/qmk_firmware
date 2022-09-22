@@ -37,12 +37,60 @@ enum planck_keycodes {
   EXT_PLV
 };
 
+enum MY_KEYCODES {
+ESC_CURR,
+DOT,
+TAB_GUI,
+QUEST,
+RPAREN_RAISE,
+LALT_RALT,
+LPAREN_LOWER,
+SAVE,
+UNDO,
+REDO,
+REPLACE,
+CLOSE,
+CUT,
+COPY,
+PASTE,
+OPEN,
+UN,
+DEUX,
+TROIS,
+QUATRE,
+CINQ,
+SIX,
+SEPT,
+HUIT,
+NEUF,
+ZERO,
+DEGREES,
+MIN,
+MAX,
+LCURLB,
+RCURLB,
+AROBASE,
+PLUS,
+MINUS,
+DIVIDE,
+MULTIPLY,
+EQUAL,
+HASHTAG,
+LSQUARB,
+RSQUARB,
+PIPE,
+CHAPEAU,
+UNDERSCORE,
+TILD,
+FORWARD_SLSH
+};
+
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Qwerty
+/* Bépo
  * ,-----------------------------------------------------------------------------------.
  * |ESC_$€|   B  |   é  |   P  |   O  |   è  |   !  |   V  |   D  |   L  |   J  |  Z   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -90,10 +138,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_G,     _______,  _______,    KC_J,    KC_L,     KC_U,     KC_Y,     KC_SCLN,
-    KC_ESC,   KC_A,     KC_R,     KC_S,     KC_T,     KC_D,     _______,  _______,    KC_H,    KC_N,     KC_E,     KC_I,     KC_O,  
-    KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     _______,  _______,    KC_K,    KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______
+    KC_Q,     KC_W,     KC_F,     KC_P,     KC_G,     _______,  _______,    KC_J,    KC_L,     KC_U,     KC_Y,     KC_SCLN,
+    KC_A,     KC_R,     KC_S,     KC_T,     KC_D,     _______,  _______,    KC_H,    KC_N,     KC_E,     KC_I,     KC_O,  
+    KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     _______,  _______,    KC_K,    KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______
 ),
 
 /* Lower
@@ -155,7 +203,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Bépo  |Qwerty|Colemk|Dvorak|Plover|
+ * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Bépo  |Azerty|Qwerty|Colemk|Plover|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -163,10 +211,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    _______, QK_BOOT,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, BEPO, QWERTY,  COLEMAK,  DVORAK,  PLOVER,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    _______,  QK_BOOT,  DEBUG,    RGB_TOG,  RGB_MOD,  RGB_HUI,  RGB_HUD,  RGB_SAI,  RGB_SAD,  RGB_VAI,  RGB_VAD,  KC_DEL ,
+    _______,  _______,  MU_MOD,   AU_ON,    AU_OFF,   AG_NORM,  AG_SWAP,  BEPO,     QWERTY,   COLEMAK,  PLOVER,   _______,
+    _______,  MUV_DE,   MUV_IN,   MU_ON,    MU_OFF,   MI_ON,    MI_OFF,   _______,  _______,  _______,  _______,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
 )
 
 };
@@ -243,6 +291,322 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           PLAY_SONG(plover_gb_song);
         #endif
         layer_off(_PLOVER);
+      }
+      return false;
+      break;
+
+    case ESC_CURR:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case DOT:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case TAB_GUI:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case QUEST:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case RPAREN_RAISE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case LALT_RALT:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case LPAREN_LOWER:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case SAVE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case UNDO:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case REDO:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case REPLACE
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case CLOSE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case CUT:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case COPY:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case PASTE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case OPEN:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case UN:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case DEUX:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case TROIS:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case QUATRE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case CINQ:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case SIX:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case SEPT:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case HUIT:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case NEUF:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case ZERO:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case DEGREES:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case MIN:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case MAX:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case LCURLB:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case RCURLB:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case AROBASE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case PLUS:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case MINUS:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case DIVIDE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case MULTIPLY:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case EQUAL:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case HASHTAG:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case LSQUARB:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case RSQUARB:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case PIPE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case CHAPEAU:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case UNDERSCORE:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }:
+      return false;
+      break;
+    case TILD:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
+      }
+      return false;
+      break;
+    case FORWARD_SLSH:
+      if (record->event.pressed) {
+        register_code();
+        unregister_code();
       }
       return false;
       break;
