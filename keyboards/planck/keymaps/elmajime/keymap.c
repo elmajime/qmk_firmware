@@ -40,10 +40,10 @@ enum planck_keycodes {
 #define DOT LSFT(KC_COMM)
 #define QUEST LSFT(KC_M)
 #define SAVE LCTL(KC_S)
-#define UNDO LCTL(KC_Z)
+#define UNDO LCTL(KC_W)
 #define REDO LCTL(KC_Y)
 #define REPLACE LCTL(KC_R)
-#define CLOSE LCTL(KC_W)
+#define CLOSE LCTL(KC_Z)
 #define CUT LCTL(KC_X)
 #define COPY LCTL(KC_C)
 #define PASTE LCTL(KC_P)
@@ -76,15 +76,15 @@ enum planck_keycodes {
 #define UNDERSCORE KC_8
 #define TILD RALT(KC_2)
 #define FORWARD_SLSH RALT(KC_8)
+#define LPAREN_LOWER LT(_LOWER, KC_5)
+#define RPAREN_RAISE LT(_RAISE, KC_MINS)
+#define CHAPEAU KC_LBRC
 
 // Tap Dance keycodes
 enum td_keycodes {
-  TD_ESC_CURRENCIES,
+  TD_CURRENCIES,
   TD_TAB_GUI,
-  TD_LALT_RALT,
-  TD_LPAREN_LOWER,
-  TD_RPAREN_RAISE,
-  TD_CHAPEAU
+  TD_LALT_RALT
 };
 
 typedef enum {
@@ -110,17 +110,14 @@ static td_state_t td_state;
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 
 // `finished` and `reset` functions for each tapdance keycode
-void TD_ESC_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data);
-void TD_ESC_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data);
+void TD_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void TD_TAB_GUI_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data);
-
-void TD_LPAREN_LOWER_finished(qk_tap_dance_state_t *state, void *user_data);
-void TD_LPAREN_LOWER_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void TD_RPAREN_RAISE_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_RPAREN_RAISE_reset(qk_tap_dance_state_t *state, void *user_data);
@@ -132,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Bépo
  * ,-----------------------------------------------------------------------------------.
- * |ESC_$€|   B  |   é  |   P  |   O  |   è  |   !  |   V  |   D  |   L  |   J  |  Z   |
+ * | ESC  |   B  |   é  |   P  |   O  |   è  |   !  |   V  |   D  |   L  |   J  |  Z   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  W   |   A  |   U  |   I  |   E  |   ,  |   C  |   T  |   S  |   R  |   N  |  M   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -142,10 +139,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_BEPO] = LAYOUT_planck_grid(
-    TD_ESC_CURRENCIES,  KC_B,    KC_2,     KC_P,       KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,     KC_J,      KC_W,
-    KC_Z,      KC_Q,    KC_U,     KC_I,       KC_E,    KC_M,          KC_C,          KC_T,      KC_S,    KC_R,     KC_N,      KC_SCLN,
-    KC_QUOT,   KC_0,    KC_Y,     KC_X,       DOT,     KC_K,          QUEST,         KC_A,      KC_G,    KC_H,     KC_F,      KC_9 ,
-    KC_LEFT,   KC_UP,   KC_LCTL,  TD_LALT_RALT,  KC_SPC,  TD_LPAREN_LOWER,  TD_RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TD_TAB_GUI,  KC_DOWN,   KC_RGHT
+    KC_ESC,   KC_B,     KC_2,     KC_P,              KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,    KC_J,   KC_W,
+    KC_Z,     KC_Q,     KC_U,     KC_I,              KC_E,    KC_M,          KC_C,          KC_T,      KC_S,    KC_R,    KC_N,   KC_SCLN,
+    KC_QUOT,  KC_0,     KC_Y,     KC_X,              DOT,     KC_Z,          KC_Q,          KC_U,      KC_I,    KC_E,    KC_M,   KC_C,
+    KC_LEFT,  KC_UP,    KC_LCTL,  TD(TD_LALT_RALT),  KC_SPC,  LPAREN_LOWER,  RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TD(TD_TAB_GUI),  KC_DOWN,
 ),
 
 /* Qwerty
@@ -186,19 +183,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |ESC_$€|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
+ * | $ €  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | F12  | Save | Undo | Redo |Replce| BSPC | DEL  | NONE | NONE |Prev  | Play |Next  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Captr |Close | Cut  | Copy |Paste |Refrsh|Insert| Open |BK_LED| Vol- | Mute |Vol+  |
+ * |Captr |Close | Cut  | Copy |Paste |Refrsh|Insert| Open |      | Vol- | Mute |Vol+  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Home | PgUp |      |      |      |             |      |      |      | PgDn | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    TD_ESC_CURRENCIES,  KC_F1,       KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,      KC_F7,    KC_F8,    KC_F9,                KC_F10,               KC_F11,
+    TD(TD_CURRENCIES),  KC_F1,       KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,      KC_F7,    KC_F8,    KC_F9,                KC_F10,               KC_F11,
     KC_F12,             SAVE,        UNDO,     REDO,     REPLACE,  KC_BSPC,         KC_DEL,     XXXXXXX,  XXXXXXX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_PLAY_PAUSE,  KC_MEDIA_NEXT_TRACK,
-    KC_PRINT_SCREEN,    CLOSE,       CUT,      COPY,     PASTE,    KC_WWW_REFRESH,  KC_INSERT,  OPEN,     BACKLIT,  KC_VOLD,              KC_KB_MUTE,           KC_VOLU,
+    KC_PRINT_SCREEN,    CLOSE,       CUT,      COPY,     PASTE,    KC_WWW_REFRESH,  KC_INSERT,  OPEN,     XXXXXXX,  KC_VOLD,              KC_KB_MUTE,           KC_VOLU,
     KC_HOME,            KC_PAGE_UP,  _______,  _______,  _______,  _______,         _______,    _______,  _______,  _______,              KC_PAGE_DOWN,         KC_END
 ),
 
@@ -214,10 +211,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-    QK_GESC,  UN,       DEUX,     TROIS,    QUATRE,   CINQ,     SIX,         SEPT,     HUIT,          NEUF,     ZERO,      DEGREES,
-    KC_1,     KC_3,     LANGLEB,      RANGLEB,      LCURLB,   RCURLB,   AROBASE,     PLUS,     MINUS,         DIVIDE,   MULTIPLY,  EQUAL,
-    XXXXXXX,  HASHTAG,  LSQUARB,  RSQUARB,  PIPE,     TD_CHAPEAU,  UNDERSCORE,  TILD,     FORWARD_SLSH,  KC_SLSH,  KC_PDOT,   KC_M,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,     _______,  _______,       _______,  _______,   _______
+    TD(TD_CURRENCIES),  UN,       DEUX,     TROIS,    QUATRE,   CINQ,     SIX,         SEPT,     HUIT,          NEUF,     ZERO,      DEGREES,
+    KC_1,               KC_3,     LANGLEB,  RANGLEB,  LCURLB,   RCURLB,   AROBASE,     PLUS,     MINUS,         DIVIDE,   MULTIPLY,  EQUAL,
+    XXXXXXX,            HASHTAG,  LSQUARB,  RSQUARB,  PIPE,     CHAPEAU,  UNDERSCORE,  TILD,     FORWARD_SLSH,  KC_SLSH,  KC_PDOT,   KC_M,
+    _______,            _______,  _______,  _______,  _______,  _______,  _______,     _______,  _______,       _______,  _______,   _______
 ),
 
 /* Plover layer (http://opensteno.org)
@@ -243,7 +240,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|Bépo  |Azerty|Qwerty|Colemk|Plover|
+ * |      |BK_LED|MUSmod|Aud on|Audoff|AGnorm|AGswap|Bépo  |Azerty|Qwerty|Colemk|Plover|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -252,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_planck_grid(
     _______,  QK_BOOT,  DEBUG,    RGB_TOG,  RGB_MOD,  RGB_HUI,  RGB_HUD,  RGB_SAI,  RGB_SAD,  RGB_VAI,  RGB_VAD,  KC_DEL ,
-    _______,  _______,  MU_MOD,   AU_ON,    AU_OFF,   AG_NORM,  AG_SWAP,  BEPO,     QWERTY,   COLEMAK,  PLOVER,   _______,
+    _______,  BACKLIT,  MU_MOD,   AU_ON,    AU_OFF,   AG_NORM,  AG_SWAP,  BEPO,     QWERTY,   COLEMAK,  PLOVER,   _______,
     _______,  MUV_DE,   MUV_IN,   MU_ON,    MU_OFF,   MI_ON,    MI_OFF,   _______,  _______,  _______,  _______,  _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
 )
@@ -467,25 +464,17 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 
 // Handle the possible states for each tapdance keycode you define:
 
-void TD_ESC_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
+void TD_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
         case TD_SINGLE_TAP:
-            register_code16(KC_ESC);
-            break;
-        case TD_DOUBLE_SINGLE_TAP: // Allow nesting of 2 escape within tapping term
-            tap_code16(KC_ESC);
-            register_code16(KC_ESC);
-            break;
-        case TD_TRIPLE_SINGLE_TAP: // Allow nesting of 3 escape within tapping term
-            tap_code16(KC_ESC);
-            tap_code16(KC_ESC);
-            register_code16(KC_ESC);
-            break;
-        case TD_DOUBLE_HOLD:
             register_code16(KC_RBRC);
             break;
-        case TD_TRIPLE_HOLD:
+        case TD_DOUBLE_SINGLE_TAP:
+            tap_code16(KC_RBRC);
+            register_code16(KC_RBRC);
+            break;
+        case TD_DOUBLE_TAP:
             register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             register_code16(KC_E);
             break;
@@ -494,21 +483,15 @@ void TD_ESC_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void TD_ESC_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data) {
+void TD_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP:
-            unregister_code16(KC_ESC);
-            break;
-        case TD_DOUBLE_SINGLE_TAP: // Allow nesting of 2 escape within tapping term
-            unregister_code16(KC_ESC);
-            break;
-        case TD_TRIPLE_SINGLE_TAP: // Allow nesting of 3 escape within tapping term
-            unregister_code16(KC_ESC);
-            break;
-        case TD_DOUBLE_HOLD:
             unregister_code16(KC_RBRC);
             break;
-        case TD_TRIPLE_HOLD:
+        case TD_DOUBLE_SINGLE_TAP:
+            unregister_code16(KC_RBRC);
+            break;
+        case TD_DOUBLE_TAP:
             unregister_code16(KC_E);
             unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             break;
@@ -551,7 +534,7 @@ void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_TRIPLE_SINGLE_TAP:
             unregister_code16(KC_TAB);
             break;
-        case TD_TRIPLE_HOLD:
+        case TD_SINGLE_HOLD:
             unregister_mods(MOD_BIT(KC_RGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             break;
         default:
@@ -562,10 +545,10 @@ void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data) {
 void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_DOUBLE_HOLD:
+        case TD_SINGLE_HOLD:
             register_mods(MOD_BIT(KC_LALT));
             break;
-        case TD_TRIPLE_HOLD:
+        case TD_DOUBLE_HOLD:
             register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             break;
         default:
@@ -575,10 +558,10 @@ void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_DOUBLE_HOLD:
+        case TD_SINGLE_HOLD:
             unregister_mods(MOD_BIT(KC_LALT));
             break;
-        case TD_TRIPLE_HOLD:
+        case TD_DOUBLE_HOLD:
             unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             break;
         default:
@@ -586,114 +569,9 @@ void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void TD_LPAREN_LOWER_finished(qk_tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            register_code16(KC_5);
-            break;
-        case TD_DOUBLE_TAP:
-            tap_code16(KC_5);
-            register_code16(KC_5);
-            break;
-        case TD_TRIPLE_TAP:
-            tap_code16(KC_5);
-            tap_code16(KC_5);
-            register_code16(KC_5);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_on(_LOWER);
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_LPAREN_LOWER_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(KC_5);
-            break;
-        case TD_DOUBLE_TAP:
-            unregister_code16(KC_5);
-            break;
-        case TD_TRIPLE_TAP:
-            unregister_code16(KC_5);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_off(_LOWER);
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_RPAREN_RAISE_finished(qk_tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            register_code16(KC_MINS);
-            break;
-        case TD_DOUBLE_TAP:
-            tap_code16(KC_MINS);
-            register_code16(KC_MINS);
-            break;
-        case TD_TRIPLE_TAP:
-            tap_code16(KC_MINS);
-            tap_code16(KC_MINS);
-            register_code16(KC_MINS);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_on(_RAISE);
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_RPAREN_RAISE_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(KC_MINS);
-            break;
-        case TD_DOUBLE_TAP:
-            unregister_code16(KC_MINS);
-            break;
-        case TD_TRIPLE_TAP:
-            unregister_code16(KC_MINS);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_off(_RAISE);
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_CHAPEAU_finished(qk_tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            SEND_STRING("^");
-            break;
-        case TD_DOUBLE_TAP:
-            SEND_STRING("^^");
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_CHAPEAU_reset(qk_tap_dance_state_t *state, void *user_data) {
-
-}
-
 // Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_ESC_CURRENCIES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_ESC_CURRENCIES_finished,TD_ESC_CURRENCIES_reset),
+    [TD_CURRENCIES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_CURRENCIES_finished,TD_CURRENCIES_reset),
     [TD_TAB_GUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_TAB_GUI_finished,TD_TAB_GUI_reset),
     [TD_LALT_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LALT_RALT_finished,TD_LALT_RALT_reset),
-    [TD_LPAREN_LOWER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LPAREN_LOWER_finished,TD_LPAREN_LOWER_reset),
-    [TD_RPAREN_RAISE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_RPAREN_RAISE_finished,TD_RPAREN_RAISE_reset),
-    [TD_CHAPEAU] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_CHAPEAU_finished,TD_CHAPEAU_reset)
 };
