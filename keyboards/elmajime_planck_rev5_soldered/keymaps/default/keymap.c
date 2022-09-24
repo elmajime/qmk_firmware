@@ -34,11 +34,13 @@ enum planck_keycodes {
   COLEMAK,
   PLOVER,
   BACKLIT,
-  EXT_PLV
+  EXT_PLV,
+  EXCL_CHAP,
+  COMMA_SEMI,
+  QUEST_TICK,
+  DOT_DOUBLE
 };
 
-#define DOT LSFT(KC_COMM)
-#define QUEST LSFT(KC_M)
 #define SAVE LCTL(KC_S)
 #define UNDO LCTL(KC_W)
 #define REDO LCTL(KC_Y)
@@ -46,7 +48,7 @@ enum planck_keycodes {
 #define CLOSE LCTL(KC_Z)
 #define CUT LCTL(KC_X)
 #define COPY LCTL(KC_C)
-#define PASTE LCTL(KC_P)
+#define PASTE LCTL(KC_V)
 #define OPEN LCTL(KC_O)
 #define UN LSFT(KC_1)
 #define DEUX LSFT(KC_2)
@@ -139,10 +141,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_BEPO] = LAYOUT_planck_grid(
-    KC_ESC,   KC_B,     KC_2,     KC_P,              KC_O,    KC_7,          KC_SLSH,       KC_V,      KC_D,    KC_L,    KC_J,   KC_W,
-    KC_Z,     KC_Q,     KC_U,     KC_I,              KC_E,    KC_M,          KC_C,          KC_T,      KC_S,    KC_R,    KC_N,   KC_SCLN,
-    KC_QUOT,  KC_0,     KC_Y,     KC_X,              DOT,     KC_Z,          KC_Q,          KC_U,      KC_I,    KC_E,    KC_M,   KC_C,
-    KC_LEFT,  KC_UP,    KC_LCTL,  TD(TD_LALT_RALT),  KC_SPC,  LPAREN_LOWER,  RPAREN_RAISE,  KC_LSFT,   KC_ENT,  TD(TD_TAB_GUI),  KC_DOWN,
+    KC_ESC,   KC_B,     KC_2,     KC_P,              KC_O,       KC_7,          EXCL_CHAP,       KC_V,      KC_D,    KC_L,            KC_J,     KC_W,
+    KC_Z,     KC_Q,     KC_U,     KC_I,              KC_E,       COMMA_SEMI,    KC_C,            KC_T,      KC_S,    KC_R,            KC_N,     KC_SCLN,
+    KC_QUOT,  KC_0,     KC_Y,     KC_X,              DOT_DOUBLE, KC_K,          QUEST_TICK,           KC_A,      KC_G,    KC_H,            KC_F,     KC_9,
+    KC_LEFT,  KC_UP,    KC_LCTL,  TD(TD_LALT_RALT),  KC_SPC,     LPAREN_LOWER,  RPAREN_RAISE,    KC_LSFT,   KC_ENT,  TD(TD_TAB_GUI),  KC_DOWN,  KC_RIGHT
 ),
 
 /* Qwerty
@@ -266,6 +268,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  const uint8_t mods = get_mods();
   switch (keycode) {
     case BEPO:
       if (record->event.pressed) {
@@ -329,6 +332,83 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #endif
         layer_off(_PLOVER);
       }
+      return false;
+      break;
+      
+    case EXCL_CHAP:
+      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
+        clear_mods();
+        if (record->event.pressed) {
+          register_code(CHAPEAU);
+        } else {
+          unregister_code(CHAPEAU);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_code(KC_SLSH);
+        } else {
+          unregister_code(KC_SLSH);
+        }
+      }
+      set_mods(mods);
+      return false;
+      break;
+    case COMMA_SEMI:
+      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
+        clear_mods();
+        if (record->event.pressed) {
+          register_code(KC_COMM);
+        } else {
+          unregister_code(KC_COMM);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_code(KC_M);
+        } else {
+          unregister_code(KC_M);
+        }
+      }
+      set_mods(mods);
+      return false;
+      break;
+    case DOT_DOUBLE:
+      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
+        clear_mods();
+        if (record->event.pressed) {
+          register_code(KC_DOT);
+        } else {
+          unregister_code(KC_DOT);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_mods(MOD_BIT(KC_LSFT));
+          register_code(KC_COMM);
+        } else {
+          unregister_code(KC_COMM);
+          unregister_mods(MOD_BIT(KC_LSFT));
+        }
+      }
+      set_mods(mods);
+      return false;
+      break;
+    case QUEST_TICK:
+      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
+        clear_mods();
+        if (record->event.pressed) {
+          register_code(KC_4);
+        } else {
+          unregister_code(KC_4);
+        }
+      } else {
+        if (record->event.pressed) {
+          register_mods(MOD_BIT(KC_LSFT));
+          register_code(KC_M);
+        } else {
+          unregister_code(KC_M);
+          unregister_mods(MOD_BIT(KC_LSFT));
+        }
+      }
+      set_mods(mods);
       return false;
       break;
     default:
