@@ -85,7 +85,6 @@ enum planck_keycodes {
 // Tap Dance keycodes
 enum td_keycodes {
   TD_CURRENCIES,
-  TD_TAB_GUI,
   TD_LALT_RALT
 };
 
@@ -115,9 +114,6 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 void TD_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data);
 
-void TD_TAB_GUI_finished(qk_tap_dance_state_t *state, void *user_data);
-void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data);
-
 void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data);
 
@@ -144,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,   KC_B,     KC_2,     KC_P,              KC_O,       KC_7,          EXCL_CHAP,       KC_V,      KC_D,    KC_L,            KC_J,     KC_W,
     KC_Z,     KC_Q,     KC_U,     KC_I,              KC_E,       COMMA_SEMI,    KC_C,            KC_T,      KC_S,    KC_R,            KC_N,     KC_SCLN,
     KC_QUOT,  KC_0,     KC_Y,     KC_X,              DOT_DOUBLE, KC_K,          QUEST_TICK,           KC_A,      KC_G,    KC_H,            KC_F,     KC_9,
-    KC_LEFT,  KC_UP,    KC_LCTL,  TD(TD_LALT_RALT),  KC_SPC,     LPAREN_LOWER,  RPAREN_RAISE,    KC_LSFT,   KC_ENT,  TD(TD_TAB_GUI),  KC_DOWN,  KC_RIGHT
+    KC_LEFT,  KC_UP,    KC_LCTL,  TD(TD_LALT_RALT),  KC_SPC,     LPAREN_LOWER,  RPAREN_RAISE,    KC_LSFT,   KC_ENT,  LGUI_T(KC_TAB),  KC_DOWN,  KC_RIGHT
 ),
 
 /* Qwerty
@@ -267,8 +263,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+uint16_t lastKeyCode = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   const uint8_t mods = get_mods();
+  bool anyShift = (mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)));
   switch (keycode) {
     case BEPO:
       if (record->event.pressed) {
@@ -336,84 +335,72 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
       
     case EXCL_CHAP:
-      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
-        clear_mods();
-        if (record->event.pressed) {
-          register_code(CHAPEAU);
+      if (record->event.pressed) {
+        if (anyShift) {
+          clear_mods();
+          lastKeyCode = CHAPEAU;
         } else {
-          unregister_code(CHAPEAU);
+          lastKeyCode = KC_SLSH;
         }
-      } else {
-        if (record->event.pressed) {
-          register_code(KC_SLSH);
-        } else {
-          unregister_code(KC_SLSH);
-        }
+        register_code16(lastKeyCode);
+        set_mods(mods);
       }
-      set_mods(mods);
-      return false;
       break;
     case COMMA_SEMI:
-      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
-        clear_mods();
-        if (record->event.pressed) {
-          register_code(KC_COMM);
+      if (record->event.pressed) {
+        if (anyShift) {
+          clear_mods();
+          lastKeyCode = KC_COMM;
         } else {
-          unregister_code(KC_COMM);
+          lastKeyCode = KC_M;
         }
-      } else {
-        if (record->event.pressed) {
-          register_code(KC_M);
-        } else {
-          unregister_code(KC_M);
-        }
+        register_code16(lastKeyCode);
+        set_mods(mods);
       }
-      set_mods(mods);
-      return false;
       break;
     case DOT_DOUBLE:
-      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
-        clear_mods();
-        if (record->event.pressed) {
-          register_code(KC_DOT);
+      if (record->event.pressed) {
+        if (anyShift) {
+          clear_mods();
+          lastKeyCode = KC_DOT;
         } else {
-          unregister_code(KC_DOT);
+          lastKeyCode = S(KC_COMM);
         }
-      } else {
-        if (record->event.pressed) {
-          register_mods(MOD_BIT(KC_LSFT));
-          register_code(KC_COMM);
-        } else {
-          unregister_code(KC_COMM);
-          unregister_mods(MOD_BIT(KC_LSFT));
-        }
+        register_code16(lastKeyCode);
+        set_mods(mods);
       }
-      set_mods(mods);
-      return false;
       break;
     case QUEST_TICK:
-      if ((mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)))) {
-        clear_mods();
-        if (record->event.pressed) {
-          register_code(KC_4);
+      if (record->event.pressed) {
+        if (anyShift) {
+          clear_mods();
+          lastKeyCode = KC_4;
         } else {
-          unregister_code(KC_4);
+          lastKeyCode = S(KC_M);
         }
-      } else {
-        if (record->event.pressed) {
-          register_mods(MOD_BIT(KC_LSFT));
-          register_code(KC_M);
-        } else {
-          unregister_code(KC_M);
-          unregister_mods(MOD_BIT(KC_LSFT));
-        }
+        register_code16(lastKeyCode);
+        set_mods(mods);
       }
-      set_mods(mods);
-      return false;
       break;
     default:
       break;
   }
+
+  switch (keycode) {
+    case KC_RSFT:
+    case KC_LSFT:
+    case EXCL_CHAP:
+    case COMMA_SEMI:
+    case DOT_DOUBLE:
+    case QUEST_TICK:
+      if (! record->event.pressed) {
+        unregister_code16(lastKeyCode);
+      }
+      break;
+    default:
+      break;
+  }
+
   return true;
 }
 
@@ -548,15 +535,14 @@ void TD_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
         case TD_SINGLE_TAP:
-            register_code16(KC_RBRC);
+            tap_code(KC_RBRC);
             break;
         case TD_DOUBLE_SINGLE_TAP:
-            tap_code16(KC_RBRC);
-            register_code16(KC_RBRC);
+            tap_code(KC_RBRC);
+            tap_code(KC_RBRC);
             break;
         case TD_DOUBLE_TAP:
-            register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
-            register_code16(KC_E);
+            register_code16(RALT(KC_E)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
             break;
         default:
             break;
@@ -565,57 +551,8 @@ void TD_CURRENCIES_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void TD_CURRENCIES_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(KC_RBRC);
-            break;
-        case TD_DOUBLE_SINGLE_TAP:
-            unregister_code16(KC_RBRC);
-            break;
         case TD_DOUBLE_TAP:
-            unregister_code16(KC_E);
-            unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_TAB_GUI_finished(qk_tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            register_code16(KC_TAB);
-            break;
-        case TD_DOUBLE_SINGLE_TAP:
-            tap_code16(KC_TAB);
-            register_code16(KC_TAB);
-            break;
-        case TD_TRIPLE_SINGLE_TAP:
-            tap_code16(KC_TAB);
-            tap_code16(KC_TAB);
-            register_code16(KC_TAB);
-            break;
-        case TD_SINGLE_HOLD:
-            register_mods(MOD_BIT(KC_RGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
-            break;
-        default:
-            break;
-    }
-}
-
-void TD_TAB_GUI_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(KC_TAB);
-            break;
-        case TD_DOUBLE_SINGLE_TAP:
-            unregister_code16(KC_TAB);
-            break;
-        case TD_TRIPLE_SINGLE_TAP:
-            unregister_code16(KC_TAB);
-            break;
-        case TD_SINGLE_HOLD:
-            unregister_mods(MOD_BIT(KC_RGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            unregister_code16(RALT(KC_E));
             break;
         default:
             break;
@@ -629,7 +566,7 @@ void TD_LALT_RALT_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_mods(MOD_BIT(KC_LALT));
             break;
         case TD_DOUBLE_HOLD:
-            register_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            register_mods(MOD_BIT(KC_RALT));
             break;
         default:
             break;
@@ -642,7 +579,7 @@ void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
             unregister_mods(MOD_BIT(KC_LALT));
             break;
         case TD_DOUBLE_HOLD:
-            unregister_mods(MOD_BIT(KC_RALT)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+            unregister_mods(MOD_BIT(KC_RALT)); 
             break;
         default:
             break;
@@ -652,6 +589,5 @@ void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CURRENCIES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_CURRENCIES_finished,TD_CURRENCIES_reset),
-    [TD_TAB_GUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_TAB_GUI_finished,TD_TAB_GUI_reset),
     [TD_LALT_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LALT_RALT_finished,TD_LALT_RALT_reset),
 };
