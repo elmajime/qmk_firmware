@@ -266,8 +266,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 uint16_t lastKeyCode = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  const uint8_t mods = get_mods();
+  uint8_t mods = get_mods();
   bool anyShift = (mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT)));
+  uint8_t lastShift = mods & MOD_BIT(KC_LSFT) ? MOD_BIT(KC_LSFT) : MOD_BIT(KC_RSFT);
+  if (! anyShift)
+    lastShift = 0;
+  
   switch (keycode) {
     case BEPO:
       if (record->event.pressed) {
@@ -336,49 +340,69 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       
     case EXCL_CHAP:
       if (record->event.pressed) {
+        clear_mods();
+        lastKeyCode = KC_SLSH;
+
         if (anyShift) {
-          clear_mods();
+          mods &= ~(lastShift);
           lastKeyCode = CHAPEAU;
-        } else {
-          lastKeyCode = KC_SLSH;
         }
+
+        set_mods(mods);
         register_code16(lastKeyCode);
+        if (anyShift)
+          mods |= lastShift;
         set_mods(mods);
       }
       break;
     case COMMA_SEMI:
       if (record->event.pressed) {
+        clear_mods();
+        lastKeyCode = KC_M;
+
         if (anyShift) {
-          clear_mods();
+          mods &= ~(lastShift);
           lastKeyCode = KC_COMM;
-        } else {
-          lastKeyCode = KC_M;
         }
+
+        set_mods(mods);
         register_code16(lastKeyCode);
+        if (anyShift)
+          mods |= lastShift;
         set_mods(mods);
       }
       break;
     case DOT_DOUBLE:
       if (record->event.pressed) {
+        clear_mods();
+        lastKeyCode = S(KC_COMM);
+
         if (anyShift) {
-          clear_mods();
+          mods &= ~(lastShift);
           lastKeyCode = KC_DOT;
-        } else {
-          lastKeyCode = S(KC_COMM);
         }
+
+        set_mods(mods);
         register_code16(lastKeyCode);
+        if (anyShift)
+          mods |= lastShift;
         set_mods(mods);
       }
       break;
     case QUEST_TICK:
       if (record->event.pressed) {
+        clear_mods();
+        lastKeyCode = S(KC_M);
+
         if (anyShift) {
-          clear_mods();
+          mods &= ~(lastShift);
           lastKeyCode = KC_4;
-        } else {
-          lastKeyCode = S(KC_M);
         }
+
+        set_mods(mods);
         register_code16(lastKeyCode);
+        if (anyShift)
+          mods |= lastShift;
         set_mods(mods);
       }
       break;
