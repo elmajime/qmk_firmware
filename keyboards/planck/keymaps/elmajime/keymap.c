@@ -123,6 +123,9 @@ void TD_RPAREN_RAISE_reset(qk_tap_dance_state_t *state, void *user_data);
 void TD_CHAPEAU_finished(qk_tap_dance_state_t *state, void *user_data);
 void TD_CHAPEAU_reset(qk_tap_dance_state_t *state, void *user_data);
 
+void TD_LPAREN_LOWER_finished(qk_tap_dance_state_t *state, void *user_data);
+void TD_LPAREN_LOWER_reset(qk_tap_dance_state_t *state, void *user_data);
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Bépo
@@ -428,6 +431,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LPAREN_LOWER:
+        case RPAREN_RAISE:
+            return 50;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 bool muse_mode = false;
 uint8_t last_muse_note = 0;
 uint16_t muse_counter = 0;
@@ -613,5 +626,4 @@ void TD_LALT_RALT_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CURRENCIES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_CURRENCIES_finished,TD_CURRENCIES_reset),
-    [TD_LALT_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LALT_RALT_finished,TD_LALT_RALT_reset),
-};
+    [TD_LALT_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,TD_LALT_RALT_finished,TD_LALT_RALT_reset),};
