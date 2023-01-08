@@ -431,16 +431,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LPAREN_LOWER:
-        case RPAREN_RAISE:
-            return 50;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
 bool muse_mode = false;
 uint8_t last_muse_note = 0;
 uint16_t muse_counter = 0;
