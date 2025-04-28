@@ -153,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      |      |      |      |      |      |ADJUST|      |      |      |      |      |
      * `-----------------------------------------------------------------------------------'
      */
-    [_FUNCTIONS] = LAYOUT_ortho_4x12(KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, SAVE, UNDO, REDO, REPLACE, KC_BSPC, KC_DEL, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_PSCR, CLOSE, CUT, COPY, PASTE, KC_NO, KC_INS, OPEN, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+    [_FUNCTIONS] = LAYOUT_ortho_4x12(KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, SAVE, UNDO, REDO, REPLACE, KC_BSPC, KC_DEL, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_PSCR, CLOSE, CUT, COPY, PASTE, KC_NO, KC_INS, OPEN, KC_NO, KC_NO, KC_NO, KC_NO, KC_HOME, KC_PAGE_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_PAGE_DOWN, KC_END),
     // old [_LOWER] = LAYCURRENCIES), KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, SAVE, UNDO, REDO, REPLACE, KC_BSPC, KC_DEL, XXXXXXX, XXXXXXX, KC_MEDIA_PREV_TRACK, KC_MEDIA_PLAY_PAUSE, KC_MEDIA_NEXT_TRACK, KC_PRINT_SCREEN, CLOSE, CUT, COPY, PASTE, KC_WWW_REFRESH, KC_INSERT, OPEN, XXXXXXX, KC_VOLD, KC_KB_MUTE, KC_VOLU, KC_HOME, KC_PAGE_UP, _______, _______, _______, _______, _______, _______, _______, _______, KC_PAGE_DOWN, KC_END),
     /* Raise
      * ,-----------------------------------------------------------------------------------.
@@ -171,16 +171,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Adjust (Lower + Raise)
      *                      v------------------------RGB CONTROL--------------------v
      * ,-----------------------------------------------------------------------------------.
-     * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
+     * |  N/A | N/A  |  N/A | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  N/A |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |MUSmod|Aud on|Audoff|      |      |Bépo  |Qwerty|ArrNum|      |      |
+     * | Debug|      |MUSmod|Aud on|Audoff|      |      |Bépo  |Qwerty|ArrNum|      |      |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |AuPrev|AuNext|Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
+     * | Reset|AuPrev|AuNext|Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |      |      |      |      |      |             |      |      |      |      |      |
      * `-----------------------------------------------------------------------------------'
      */
-    [_ADJUST] = LAYOUT_ortho_4x12(KC_TRNS, QK_BOOT, DB_TOGG, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, KC_DEL, KC_TRNS, KC_TRNS, MU_NEXT, AU_ON, AU_OFF, KC_NO, KC_NO, DF(_BEPO), DF(_QWERTY), DF(_ARR_NUM), KC_TRNS, KC_TRNS, KC_TRNS, AU_PREV, AU_NEXT, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
+    [_ADJUST] = LAYOUT_ortho_4x12(KC_NO, KC_NO, KC_NO, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, KC_NO, DB_TOGG, KC_TRNS, MU_NEXT, AU_ON, AU_OFF, KC_NO, KC_NO, DF(_BEPO), DF(_QWERTY), DF(_ARR_NUM), KC_TRNS, KC_TRNS, QK_BOOT, AU_PREV, AU_NEXT, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
     // oldJUST] = LAYOUT_planck_gr(_______, QK_BOOT, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL, _______, BACKLIT, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, BEPO, QWERTY, COLEMAK, PLOVER, _______, _______, MUV_DE, MUV_IN, MU_ON, MU_OFF, MI_ON, MI_OFF, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)
 
     // [6] = LAYOUT_ortho_4x12(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
