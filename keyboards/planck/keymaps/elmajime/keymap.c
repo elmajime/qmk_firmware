@@ -113,10 +113,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  ù%  |   à  |   Y  |   X  |  .:  |   K  |  ?'  |   Q  |   G  |   H  |   F  |  ç   |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | Left |  Up  |LCTRL$| RALT |Space |FUNCTS|CHARS |LShift|Enter | Tab  |Down  |Right |
+     * | Left |  Up  |LCTRL$| LALT |Space |FUNCTS|CHARS |LShift|Enter | Tab  |Down  |Right |
      * `-----------------------------------------------------------------------------------'
      */
-    [_BEPO] = LAYOUT_ortho_4x12(QK_GESC, KC_B, KC_2, KC_P, KC_O, KC_7, EXCL_CHAP, KC_V, KC_D, KC_L, KC_J, KC_W, KC_Z, KC_Q, KC_U, KC_I, KC_E, COMMA_SEMI, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, KC_QUOT, KC_0, KC_Y, KC_X, DOT_DOUBLE, KC_K, QUEST_TICK, KC_A, KC_G, KC_H, KC_F, KC_9, KC_LEFT, KC_UP, LCTL_T(KC_RBRC), KC_RALT, KC_SPC, LPAREN_LOWER, RPAREN_RAISE, KC_LSFT, KC_ENT, LGUI_T(KC_TAB), KC_DOWN, KC_RGHT),
+    [_BEPO] = LAYOUT_ortho_4x12(QK_GESC, KC_B, KC_2, KC_P, KC_O, KC_7, EXCL_CHAP, KC_V, KC_D, KC_L, KC_J, KC_W, KC_Z, KC_Q, KC_U, KC_I, KC_E, COMMA_SEMI, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, KC_QUOT, KC_0, KC_Y, KC_X, DOT_DOUBLE, KC_K, QUEST_TICK, KC_A, KC_G, KC_H, KC_F, KC_9, KC_LEFT, KC_UP, LCTL_T(KC_RBRC), KC_LALT, KC_SPC, LPAREN_LOWER, RPAREN_RAISE, KC_LSFT, KC_ENT, LGUI_T(KC_TAB), KC_DOWN, KC_RGHT),
     // old [_BEPO] = LAYOUT( KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, EXCL_CHAP, KC_V, KC_D, KC_L, KC_J, KC_W, KC_Z, KC_Q, KC_U, KC_I, KC_E, COMMA_SEMI, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, KC_QUOT, KC_0, KC_Y, KC_X, DOT_DOUBLE, KC_K, QUEST_TICK, KC_A, KC_G, KC_H, KC_F, KC_9, KC_LEFT, KC_UP, KC_LCTL, TD(TD_LALT_RALT), KC_SPC, LPAREN_LOWER, RPAREN_RAISE, KC_LSFT, KC_ENT, LGUI_T(KC_TAB), KC_DOWN, KC_RIGHT),
     /* Qwerty
      * ,-----------------------------------------------------------------------------------.
@@ -161,12 +161,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  &   |   "  |   <  |   >  |   {  |   }  |   @  |   +  |   -  |   /  |   *  |   =  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | NONE |   #  |   [  |   ]  |   |  |   ^  |   _  |   ~  |   \  |   !  |   .  |   ,  |
+     * |  €   |   #  |   [  |   ]  |   |  |   ^  |   _  |   ~  |   \  |   !  |   .  |   ,  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |      |             |      |      |      |      |      |
+     * |      |      |LCTRL€| RALT |      |             |      |      |      |      |      |
      * `-----------------------------------------------------------------------------------'
      */
-    [_CHARS] = LAYOUT_ortho_4x12(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DEGREES, KC_1, KC_3, LANGLEB, RANGLEB, LCURLB, RCURLB, AROBASE, PLUS, MINUS, DIVIDE, MULTIPLY, EQUAL, KC_NO, HASHTAG, LSQUARB, RSQUARB, PIPE, CHAPEAU, UNDERSCORE, TILD, FORWARD_SLSH, KC_SLSH, KC_PDOT, KC_M, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+    [_CHARS] = LAYOUT_ortho_4x12(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DEGREES, KC_1, KC_3, LANGLEB, RANGLEB, LCURLB, RCURLB, AROBASE, PLUS, MINUS, DIVIDE, MULTIPLY, EQUAL, RALT(KC_E), HASHTAG, LSQUARB, RSQUARB, PIPE, CHAPEAU, UNDERSCORE, TILD, FORWARD_SLSH, KC_SLSH, KC_PDOT, KC_M, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RALT, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
     // old [_RAISE]TD(TD_CURRENCIES), UN, DEUX, TROIS, QUATRE, CINQ, SIX, SEPT, HUIT, NEUF, ZERO, DEGREES, KC_1, KC_3, LANGLEB, RANGLEB, LCURLB, RCURLB, AROBASE, PLUS, MINUS, DIVIDE, MULTIPLY, EQUAL, XXXXXXX, HASHTAG, LSQUARB, RSQUARB, PIPE, CHAPEAU, UNDERSCORE, TILD, FORWARD_SLSH, KC_SLSH, KC_PDOT, KC_M, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
     /* Adjust (Lower + Raise)
      *                      v------------------------RGB CONTROL--------------------v
