@@ -120,16 +120,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // old [_BEPO] = LAYOUT( KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, EXCL_CHAP, KC_V, KC_D, KC_L, KC_J, KC_W, KC_Z, KC_Q, KC_U, KC_I, KC_E, COMMA_SEMI, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, KC_QUOT, KC_0, KC_Y, KC_X, DOT_DOUBLE, KC_K, QUEST_TICK, KC_A, KC_G, KC_H, KC_F, KC_9, KC_LEFT, KC_UP, KC_LCTL, TD(TD_LALT_RALT), KC_SPC, LPAREN_LOWER, RPAREN_RAISE, KC_LSFT, KC_ENT, LGUI_T(KC_TAB), KC_DOWN, KC_RIGHT),
     /* Qwerty
      * ,-----------------------------------------------------------------------------------.
-     * |      |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | BSPC |
+     * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | DEL  |
+     * | ESC  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | Enter|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |LShift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Enter|
+     * |LShift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | DEL  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |      |      |      |      |      |      |      |      |
+     * |LCTRL | LGUI | LALT |  N/A |Space |      |      |Space |  N/A | RALT | RWIN |RCTRL |
      * `-----------------------------------------------------------------------------------'
      */
-    [_QWERTY] = LAYOUT_ortho_4x12(KC_TRNS, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_TRNS, KC_L, KC_SCLN, KC_DEL, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+    [_QWERTY] = LAYOUT_ortho_4x12(KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_LCTL, KC_LGUI, KC_LALT, KC_NO, KC_SPC, KC_TRNS, KC_TRNS, KC_SPC, KC_NO, KC_RALT, KC_RGUI, KC_RCTL),
     /* Arrows_and_numpad
      * ,-----------------------------------------------------------------------------------.
      * |      |  N/A |  N/A |  Up  | N/A  | N/A  |VerNum|  =   |   7  |   8  |   9  |   /  |
